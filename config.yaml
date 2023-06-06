@@ -1,0 +1,23 @@
+ui:
+  image:
+    repository: test/console-ui
+    tag: "test"
+
+  imagePullSecrets:
+    - name: docker-reg-crd
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: "cluster-letsencrypt-prod"
+    hosts:
+      - host: test.io
+        paths:
+          - /
+    tls:
+      - hosts:
+          - ctest.io
+        secretName: test.io-tls
+
+  service:
+    port: 3000
